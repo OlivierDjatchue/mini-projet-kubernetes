@@ -49,6 +49,13 @@ The project is structured as follows:
 ### Secrets
 
 The `secrets.yaml` file contains the sensitive information needed by the application, such as database credentials. Storing this information in secrets allows you to manage sensitive data securely in your Kubernetes environment.
+
+#### What Are Secrets?
+
+-   **Purpose**: This file stores confidential information like passwords in a secure way, so it doesn’t appear in plain text in the code.
+-   **How It Works**: Secrets are like a safe deposit box that holds the keys to unlock your database and website. It ensures that these keys are not visible to everyone.
+
+
 ```bash
 apiVersion: v1
 kind: Secret
@@ -62,13 +69,16 @@ data:
   MYSQL_PASSWORD: ZXhhbXBsZXBhc3M=` 
   ```
 
+**Example Explained**: This code snippet tells Kubernetes to create a safe space called `wp-db-secret` to hold the database password, database name, username, and user password in an encrypted format.
+
 ### Persistent Volumes and Claims
 
 The `mysql-pv-pvc.yaml` and `wordpress-pv-pvc.yaml` files define the Persistent Volumes and Persistent Volume Claims for MySQL and WordPress, respectively. These volumes ensure data persistence.
 
-**MySQL PV and PVC:**
+#### What Are Persistent Volumes and Claims?
 
-
+-   **Purpose**: These files define storage spaces for your data. They ensure that the information in your database and website files doesn't get lost even if your application restarts.
+-   **How It Works**: Think of Persistent Volumes as hard drives where your data is stored, and Persistent Volume Claims as the cables that connect these hard drives to your applications.
 
 ```bash 
 apiVersion: v1
@@ -97,6 +107,7 @@ spec:
       storage: 2Gi
   storageClassName: slow` 
  ```
+**Example Explained**: This file sets up a storage space named `mysql-pv` with a capacity of 2 gigabytes for the MySQL database. The claim, `mysql-pvc`, is like the cable that connects this storage to the MySQL application.
 
 **WordPress PV and PVC:**
 
@@ -128,9 +139,16 @@ spec:
   storageClassName: slow
   ```
 
+-   **Example Explained**: This code sets up a similar storage space for WordPress data, ensuring that all website content is securely stored and can be accessed even after a restart.
+
 ### Deployments
 
 The deployment files define how to deploy the WordPress and MySQL applications.
+
+#### What Are Deployments?
+
+-   **Purpose**: Deployment files describe how to set up and manage your applications (like WordPress and MySQL) on Kubernetes.
+-   **How It Works**: They are like a set of instructions for Kubernetes, telling it what software to run, how many copies to make, and how to connect everything together.
 
 **MySQL Deployment:**
 ```bash
@@ -164,6 +182,9 @@ spec:
           persistentVolumeClaim:
             claimName: mysql-pvc
 ```
+
+**Example Explained**: This file tells Kubernetes to run a MySQL database using the information from the `wp-db-secret`. It also specifies that the data should be stored on the `mysql-pvc` storage space.
+
 **WordPress Deployment:**
 
 ```bash
@@ -213,11 +234,16 @@ spec:
             claimName: wordpress-pvc
 
 ```
-
+ **Example Explained**: This file instructs Kubernetes to set up WordPress, using the same database secrets for login information. It connects the WordPress application to its data storage area using the `wordpress-pvc`.
 
 ### Services
 
 The service files expose the deployments to the network, allowing other pods and external users to access them.
+
+#### What Are Services?
+
+-   **Purpose**: Services act like a receptionist or a guide that directs traffic to the right place. They help different parts of the system talk to each other and let users access the applications.
+-   **How It Works**: Services ensure that when someone wants to use WordPress or access the MySQL database, they can find and communicate with the correct application.
 
 **MySQL Service:**
 ```bash
@@ -233,6 +259,7 @@ spec:
       targetPort: 3306
   clusterIP: None
 ```
+**Example Explained**: This service file sets up a connection to the MySQL database. It ensures that the WordPress application knows where to find and how to talk to the MySQL database.
 
 **WordPress Service:**
 ```bash
@@ -249,7 +276,7 @@ spec:
       targetPort: 80
       nodePort: 30080
 ```
-
+**Example Explained**: This service file makes the WordPress website accessible from outside the Kubernetes cluster. It sets up a special port (like a door) through which users can visit the WordPress site.
 
 ## Setup
 
