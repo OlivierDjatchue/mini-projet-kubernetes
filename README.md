@@ -36,15 +36,7 @@ This project aims to deploy a WordPress application with a MySQL database using 
 
 The project is structured as follows:
 
-├── README.md
-├── secrets.yaml
-├── mysql-pv-pvc.yaml
-├── wordpress-pv-pvc.yaml
-├── mysql-deployment.yaml
-├── wordpress-deployment.yaml
-├── mysql-service.yaml
-└── wordpress-service.yaml
-
+>![image](images/overview.png)
 
 -   **`secrets.yaml`**: Stores sensitive data like database credentials.
 -   **`mysql-pv-pvc.yaml`**: Defines both the Persistent Volume and Persistent Volume Claim for MySQL.
