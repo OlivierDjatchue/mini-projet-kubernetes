@@ -284,7 +284,7 @@ spec:
 
 Clone this repository to your local machine using the following command:
 
-`git clone https://github.com/your-username/your-repository-name.git
+git clone https://github.com/OlivierDjatchue/mini-projet-kubernetes.git
 cd your-repository-name` 
 
 ### 2. Start Minikube
